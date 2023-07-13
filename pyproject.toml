@@ -1,0 +1,64 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "xthread"
+description = "Useful threading for pause/unpause and terminating"
+readme = "README.md"
+keywords = ["thread", "threading"]
+requires-python = ">=3.7"
+authors = [
+    { name = "Nguyen Khac Thanh", email = "nguyenkhacthanh244@gmail.com" },
+]
+license = "MIT"
+dynamic = ["version"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+
+[project.optional-dependencies]
+dev = [
+    "mypy",
+    "ruff",
+    "coverage",
+]
+
+[project.urls]
+Homepage = "https://github.com/magiskboy/xthread"
+Documentation = "https://github.com/magiskboy/xthread#features"
+Issues = "https://github.com/magiskboy/xthread/issues/"
+Source = "https://github.com/magiskboy/xthread"
+Changelog = "https://github.com/magiskboy/xthread/blob/main/CHANGELOG.md"
+
+[tool.hatch.version]
+path = "xthread/__init__.py"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.mypy]
+ignore_missing_imports = true
+check_untyped_defs = true
+
+[tool.coverage.run]
+omit = ["tests/*"]
+
+[tool.coverage.path]
+source = "xthread"
+
+[tool.coverage.report]
+fail_under = 95
+show_missing = true
+sort = "Cover"
+
+[tool.ruff]
+ignore = ["E501"]

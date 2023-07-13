@@ -1,0 +1,47 @@
+name: Publish
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.7"
+          cache-dependency-path: pyproject.toml
+      - uses: actions/cache@v3
+        id: cache
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ runner.os }}-python-${{ env.pythonLocation }}-${{ hashFiles('pyproject.toml') }}-publish
+      - name: Install build dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: pip install build
+      - name: Build distribution
+        run: python -m build
+      - name: Publish
+        uses: pypa/gh-action-pypi-publish@v1.8.6
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v4.1.1
+
+  generate-changelog:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - uses: BobAnkh/auto-generate-changelog@v1.2.5
+      with:
+        REPO_NAME: 'magiskboy/xthread'
+        ACCESS_TOKEN: ${{ secrets.CHANGELOG_TOKEN }}
+        PATH: 'CHANGELOG.md'
+        COMMIT_MESSAGE: 'docs(CHANGELOG): update release notes'
+        TYPE: 'feat:Feature,fix:Bug Fixes,docs:Documentation,refactor:Refactor,perf:Performance Improvements'
