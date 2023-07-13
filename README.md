@@ -8,8 +8,8 @@
     <a href="https://github.com/magiskboy/xthread/actions">
         <img src="https://github.com/magiskboy/xthread/actions/workflows/test-suite.yml/badge.svg" alt="Build Status">
     </a>
-    <a href="https://app.codecov.io/gh/magiskboy/xthread">
-        <img src="https://img.shields.io/codecov/c/github/magiskboy/xthread" alt="Code coverage">
+    <a href="https://codecov.io/gh/magiskboy/xthread" > 
+        <img src="https://codecov.io/gh/magiskboy/xthread/branch/master/graph/badge.svg?token=uXPvINHpRs"/> 
     </a>
     <a href="https://pypi.org/project/xthread/">
         <img src="https://img.shields.io/pypi/dd/xthread" alt="Download PyPi">
