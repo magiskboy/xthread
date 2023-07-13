@@ -9,12 +9,23 @@ WAIT_TIME = 0.1
 
 class ThreadTestCase(unittest.TestCase):
     def test_thread_running(self):
-        target = mock.Mock()
-        thread = Thread(target=target)
+        target = mock.Mock(return_value=42)
+        on_result = mock.Mock()
+        thread = Thread(target=target, on_result=on_result)
         time.sleep(WAIT_TIME)
         thread.stop()
 
         target.assert_called_with(thread)
+        on_result.assert_called_with(42)
+
+    def test_without_error_handler(self):
+        error = ValueError()
+        target = mock.Mock(side_effect=error)
+
+        thread = Thread(target=target)
+        time.sleep(WAIT_TIME)
+        thread.stop()
+
 
     def test_catch_error(self):
         error = ValueError()
