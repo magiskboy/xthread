@@ -65,6 +65,18 @@ class Thread:
         if self.__on_unpaused:
             self.__on_unpaused(self)
 
+    @property
+    def is_active(self):
+        return self.__is_running.is_set()
+
+    @property
+    def is_paused(self):
+        return self.is_active and not self.__resume.is_set()
+
+    @property
+    def is_running(self):
+        return self.is_active and not self.is_paused
+
     def __cycle_execution(self, target, args=None, kwargs=None):
         args = args or tuple()
         kwargs = kwargs or dict()

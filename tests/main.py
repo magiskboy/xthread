@@ -13,7 +13,20 @@ class ThreadTestCase(unittest.TestCase):
         on_result = mock.Mock()
         thread = Thread(target=target, on_result=on_result)
         time.sleep(WAIT_TIME)
+
+        self.assertTrue(thread.is_active)
+        self.assertTrue(thread.is_running)
+        self.assertFalse(thread.is_paused)
+
+        thread.pause()
+        self.assertTrue(thread.is_active)
+        self.assertTrue(thread.is_paused)
+        self.assertFalse(thread.is_running)
+
         thread.stop()
+        self.assertFalse(thread.is_active)
+        self.assertFalse(thread.is_running)
+        self.assertFalse(thread.is_paused)
 
         target.assert_called_with(thread)
         on_result.assert_called_with(42)
